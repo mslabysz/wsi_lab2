@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from functions import quadratic
 import numpy as np
 
 
@@ -50,16 +49,3 @@ def solver(eval_func, params, rng) -> SolverResult:
     return SolverResult(
         x=x[i], value=float(values[i]), history=history, stop_reason=stop_reason, fe=fe
     )
-
-
-if __name__ == "__main__":
-    values = []
-    for seed in range(5):
-        params = SolverParameters(
-            n=10, fe_max=100 * 10, mu=10, lam=80, sigma=0.5, target=1e-4
-        )
-        result = solver(quadratic, params, np.random.default_rng(seed))
-        values.append(result.value)
-        print(seed, result.value, result.fe, result.stop_reason)
-    values = np.array(values)
-    print(values.mean(), values.std(ddof=1))
